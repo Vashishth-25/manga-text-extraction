@@ -110,7 +110,7 @@ class MangaPipeline:
             split: Which split to process ('development' or 'test')
         """
         # Load sequences
-        with open(sequences_path, 'r') as f:
+        with open(sequences_path, 'r', encoding='utf-8') as f:
             sequences = json.load(f)
 
         # Filter by split
@@ -131,7 +131,7 @@ class MangaPipeline:
                 })
 
         # Save predictions
-        with open(output_path, 'w') as f:
+        with open(output_path, 'w', encoding='utf-8') as f:
             for pred in predictions:
                 f.write(json.dumps(pred) + '\n')
 
@@ -148,7 +148,7 @@ def load_config(config_path: str = 'config.json') -> Dict:
         Configuration dictionary
     """
     if Path(config_path).exists():
-        with open(config_path, 'r') as f:
+        with open(config_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     else:
         # Default configuration
@@ -167,5 +167,5 @@ def save_config(config: Dict, config_path: str = 'config.json'):
         config: Configuration dictionary
         config_path: Path to save config file
     """
-    with open(config_path, 'w') as f:
+    with open(config_path, 'w', encoding='utf-8') as f:
         json.dump(config, f, indent=2)

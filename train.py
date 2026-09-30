@@ -30,7 +30,7 @@ def split_development_data(sequences_path: str, labels_path: str,
 
     # Load labels
     labels = {}
-    with open(labels_path, 'r') as f:
+    with open(labels_path, 'r', encoding='utf-8') as f:
         for line in f:
             if line.strip():
                 label = json.loads(line)
@@ -80,7 +80,7 @@ def evaluate_predictions(predictions_path: str, references_path: str, output_pat
         return None
 
     # Load scores
-    with open(output_path, 'r') as f:
+    with open(output_path, 'r', encoding='utf-8') as f:
         scores = json.load(f)
 
     return scores['macro']
@@ -127,7 +127,7 @@ def tune_hyperparameters(train_sequences, val_sequences, val_labels_path, base_p
 
             # Save validation sequences to temp file
             val_sequences_path = 'temp_val_sequences.json'
-            with open(val_sequences_path, 'w') as f:
+            with open(val_sequences_path, 'w', encoding='utf-8') as f:
                 json.dump(val_sequences, f)
 
             # Process validation set
@@ -145,7 +145,7 @@ def tune_hyperparameters(train_sequences, val_sequences, val_labels_path, base_p
                     })
 
             # Save predictions
-            with open(val_predictions_path, 'w') as f:
+            with open(val_predictions_path, 'w', encoding='utf-8') as f:
                 for pred in predictions:
                     f.write(json.dumps(pred) + '\n')
 
@@ -196,8 +196,8 @@ def main():
 
     # Save validation labels
     val_labels_path = 'val_labels.jsonl'
-    with open(val_labels_path, 'w') as f:
-        for seq_id, label in val_labels.items():
+    with open(val_labels_path, 'w', encoding='utf-8') as f:
+        for label in val_labels.values():
             f.write(json.dumps(label) + '\n')
 
     print(f"   Saved validation labels to {val_labels_path}")

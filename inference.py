@@ -37,7 +37,7 @@ def main():
 
     # Verify format
     print("\nVerifying output format...")
-    with open(output_path, 'r') as f:
+    with open(output_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
         print(f"Total test sequences: {len(lines)}")
 
