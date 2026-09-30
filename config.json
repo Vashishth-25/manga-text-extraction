@@ -1,0 +1,6 @@
+{
+  "ocr_confidence": 0.3,
+  "rtl_threshold": 0.5,
+  "min_speakers": 2,
+  "max_speakers": 8
+}
