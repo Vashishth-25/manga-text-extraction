@@ -63,6 +63,8 @@ tmp/
 temp/
 *.log
 
-# Submissions
-test_predictions.jsonl
+# Submissions (keep test_predictions.jsonl, exclude scores only)
 scores.json
+dev_scores.json
+temp_*.json
+temp_*.jsonl
