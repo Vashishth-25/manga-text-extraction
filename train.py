@@ -1,9 +1,18 @@
 """Training script with validation."""
+import sys
 import json
 import numpy as np
 from pathlib import Path
 from sklearn.model_selection import train_test_split
 import subprocess
+
+# Ensure utf-8 output on Windows
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 from src.pipeline import MangaPipeline, load_config, save_config
 
@@ -22,7 +31,7 @@ def split_development_data(sequences_path: str, labels_path: str,
         train_sequences, val_sequences, train_labels, val_labels
     """
     # Load sequences
-    with open(sequences_path, 'r') as f:
+    with open(sequences_path, 'r', encoding='utf-8') as f:
         sequences = json.load(f)
 
     # Filter development sequences

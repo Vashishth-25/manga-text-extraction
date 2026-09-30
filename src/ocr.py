@@ -1,21 +1,41 @@
 """OCR module for text detection and extraction from manga pages."""
+import sys
 import cv2
 import numpy as np
 from typing import List, Dict, Tuple
 import easyocr
 
+# Ensure utf-8 output on Windows
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
+# Global cached reader so models are loaded only once into memory
+_GLOBAL_READER = None
+
+
+def get_easyocr_reader():
+    global _GLOBAL_READER
+    if _GLOBAL_READER is None:
+        _GLOBAL_READER = easyocr.Reader(['en'], gpu=False, verbose=False)
+    return _GLOBAL_READER
+
 
 class MangaOCR:
     """OCR system for manga text extraction."""
 
-    def __init__(self, confidence_threshold=0.3):
+    def __init__(self, confidence_threshold=0.3, reader=None):
         """Initialize OCR reader.
 
         Args:
             confidence_threshold: Minimum confidence score for text detection
+            reader: Optional pre-instantiated EasyOCR Reader
         """
         self.confidence_threshold = confidence_threshold
-        self.reader = easyocr.Reader(['en'], gpu=False)
+        self.reader = reader or get_easyocr_reader()
 
     def extract_text(self, image_path: str) -> List[Dict]:
         """Extract text from manga page with bounding boxes.

@@ -1,6 +1,15 @@
 """Inference script for test set predictions."""
+import sys
 import json
 from pathlib import Path
+
+# Ensure utf-8 output on Windows
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
 from src.pipeline import MangaPipeline, load_config
 
